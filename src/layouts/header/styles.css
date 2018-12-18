@@ -1,0 +1,27 @@
+.top-band {
+  height: 100px;
+  background-color: #114094;
+}
+
+.top-band-h3 {
+  padding-left: 1.5rem;
+  padding-top: 0.8rem;
+  color: white;
+  font-size: 2.5em;
+}
+
+.pmr-header__container {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.login-div {
+  color: white;
+  margin-top: 0.7rem;
+  margin-right: 0.5rem;
+}
+
+.change-link {
+  color: #ffffff;
+  padding-right: 18;
+}

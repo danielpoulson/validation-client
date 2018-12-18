@@ -1,0 +1,12 @@
+.cc-navigation-styles {
+  font-size: 110%;
+}
+
+.navbar {
+  min-height: 30px;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.val-navbar--icon {
+  padding-right: 10px;
+}
