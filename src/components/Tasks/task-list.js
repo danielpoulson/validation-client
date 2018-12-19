@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import TaskTable from "./task-table";
-import "./style.css";
+import "./styles.css";
 
 type Props = {
   exportTasks: Function,

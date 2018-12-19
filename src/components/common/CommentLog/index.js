@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import styled from "styled-components";
-import { sortUtcDates } from "../../utils/data-functions";
+import { sortUtcDates } from "../../../utils/data-functions";
 
 const Box = styled.div`
   margin: 20px 20px 10px 50px;

@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import toastr from "toastr";
 import ProjectForm from "../../components/Project/project-form";
 import { projectFormIsValid } from "./project-form.validation";
-import { usersFormattedForDropdown } from "../../components/common/Selectors";
+// import { usersFormattedForDropdown } from "../../components/common/Selectors";
 import TabBar from "../../components/common/TabBar";
 import TaskList from "../../components/Tasks/task-list";
-import FileList from "../../components/Files/file-list";
+import FileList from "../../components/Files/FileList";
 import ProjectLog from "../../components/Projects/project-log";
 import ErrorPanel from "../../components/common/ErrorPanel";
 import SectionHeader from "../../components/common/SectionHeader";
 import { addObjectToArray, removeByIndex } from "../../utils/data-functions";
 // import { deleteFile } from "../../api/file.api";
 
-import "./style.css";
+import "./styles.css";
 
 /* actions */
 // import {
@@ -66,32 +66,22 @@ class ProjectDetail extends Component {
 
   componentDidMount() {
     const pjNo = this.props.match.params.id;
-    if (this.props.main.loading === true) {
-      // this.props.getProjectTasks(pjNo);
-    }
+    // if (this.props.main.loading === true) {
+    //   // this.props.getProjectTasks(pjNo);
+    // }
     this.setState({ pjNo });
 
     if (pjNo !== "new") {
-      getProjectById(pjNo).then(proj => {
-        const project = proj.data.project;
-        this.setState({
-          project: project,
-          log: project.pj_log,
-          champ: project.pj_champ,
-          tasks: proj.data.tasks,
-          files: proj.data.files
-        });
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.setTitle(
-      `${this.state.project.pj_no} - ${this.state.project.pj_title}`
-    );
-
-    if (this.state.isLogDirty) {
-      saveLogMessage(this.state.log);
+      // getProjectById(pjNo).then(proj => {
+      //   const project = proj.data.project;
+      //   this.setState({
+      //     project: project,
+      //     log: project.pj_log,
+      //     champ: project.pj_champ,
+      //     tasks: proj.data.tasks,
+      //     files: proj.data.files
+      //   });
+      // });
     }
   }
 
@@ -118,7 +108,7 @@ class ProjectDetail extends Component {
 
   onDeleteFile = id => {
     const files = removeByIndex(this.state.files, id);
-    deleteFile(id, "Equipment");
+    // deleteFile(id, "Equipment");
     return this.setState({ files: files });
   };
 
@@ -156,7 +146,7 @@ class ProjectDetail extends Component {
   };
 
   exportTasks = () => {
-    exportTaskList(this.state.pjNo);
+    // exportTaskList(this.state.pjNo);
   };
 
   updateProjectState = event => {
@@ -188,20 +178,20 @@ class ProjectDetail extends Component {
       _project.newOwner = _project.pj_champ !== this.state.champ;
 
       if (_project.pj_stat >= 4) {
-        this.props.closeProject(_project.pj_no);
+        // this.props.closeProject(_project.pj_no);
       } else {
-        this.props.editProject({
-          _id: _project._id,
-          pj_no: _project.pj_no,
-          pj_title: _project.pj_title,
-          pj_champ: _project.pj_champ,
-          pj_target: _project.pj_target,
-          pj_stat: _project.pj_stat,
-          pj_pry: _project.pj_pry
-        });
+        // this.props.editProject({
+        //   _id: _project._id,
+        //   pj_no: _project.pj_no,
+        //   pj_title: _project.pj_title,
+        //   pj_champ: _project.pj_champ,
+        //   pj_target: _project.pj_target,
+        //   pj_stat: _project.pj_stat,
+        //   pj_pry: _project.pj_pry
+        // });
       }
       _project.pj_log = this.state.log;
-      saveProjectById(_project);
+      // saveProjectById(_project);
     } else {
       const created = [];
       created.push({
@@ -213,9 +203,9 @@ class ProjectDetail extends Component {
       _project.pj_log = created;
       _project.pj_stat = _project.pj_stat || 1;
 
-      createProject(_project).then(proj => {
-        this.props.addProject(proj.data);
-      });
+      // createProject(_project).then(proj => {
+      //   this.props.addProject(proj.data);
+      // });
     }
 
     toastr.success("Project has been saved", "Project Detail", {
@@ -236,25 +226,25 @@ class ProjectDetail extends Component {
     });
   };
   props: {
-    addProject: any,
-    project: any,
-    ctTotal: number,
-    createLog: any,
-    closeProject: any,
-    editProject: any,
-    getProject: any,
-    getProjectTasks: any,
-    getTask: any,
-    history: any,
-    main: any,
-    setTitle: any,
-    tasklist: any,
-    users: any,
-    match: {
-      params: {
-        id: string
-      }
-    }
+    // addProject: any,
+    // project: any,
+    // ctTotal: number,
+    // createLog: any,
+    // closeProject: any,
+    // editProject: any,
+    // getProject: any,
+    // getProjectTasks: any,
+    // getTask: any,
+    // history: any,
+    // main: any,
+    // setTitle: any,
+    // tasklist: any,
+    // users: any,
+    // match: {
+    //   params: {
+    //     id: string
+    //   }
+    // }
   };
 
   render() {
@@ -307,7 +297,7 @@ class ProjectDetail extends Component {
             onProjectStateChange={this.updateProjectState}
             onDateProject={this.updateProjectStateDate}
             status={this.state.status}
-            users={this.props.users}
+            users={["Daniel Poulson", "Tim Woods"]}
           />
         </div>
         <TaskList
@@ -335,7 +325,7 @@ class ProjectDetail extends Component {
             files={this.state.files}
             addFile={this.addFile}
             deleteFile={this.onDeleteFile}
-            user={this.props.main.user.fullname}
+            user={"Daniel Poulson"}
             mode="Project"
           />
         </div>

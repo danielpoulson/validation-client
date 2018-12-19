@@ -1,6 +1,6 @@
 import React from "react";
-import TabRow from "./tab-row";
-import { tabData } from "../../utils/helpers";
+import TabRow from "../TabRow";
+import { tabData } from "../../../utils/helpers";
 import "./styles.css";
 
 type Props = {

@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-date-picker";
-import "./styles.css";
+import "./new-date-picker.css";
 
 type Props = {
   error: boolean,
@@ -11,7 +11,7 @@ type Props = {
   selectedDay: string
 };
 
-const DatePicker = ({
+const ReactDatePicker = ({
   error,
   inputdiv,
   label,
@@ -51,4 +51,4 @@ const DatePicker = ({
   );
 };
 
-export default DatePicker;
+export default ReactDatePicker;

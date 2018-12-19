@@ -1,0 +1,13 @@
+.val--files__container {
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  grid-column-gap: 30px;
+  border-top: solid 2px grey;
+  padding: 30px 0px 15px 20px;
+}
+.val--files__filelist {
+  grid-column: 1/2;
+}
+.val--files__filezone {
+  grid-column: 2/3;
+}

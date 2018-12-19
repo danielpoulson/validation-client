@@ -8,6 +8,7 @@ import Header from "./layouts/header";
 
 import Home from "./containers/Home";
 import Projects from "./containers/Projects";
+import Project from "./containers/Project";
 
 const client = new ApolloClient({
   uri: "http://localhost:5555"
@@ -31,6 +32,7 @@ const Routes = () => (
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/projects" component={Projects} />
+          <Route path="/project/:id" component={Project} />
           <Redirect from="/home" to="/" />
           <Route component={FourOhFour} />
         </Switch>

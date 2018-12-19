@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FormInput from "../../components/common/FormInput";
 import TextArea from "../../components/common/TextArea";
 import SelectInput from "../../components/common/SelectInput";
-import DatePicker from "../../components/common/DatePicker";
+import DatePicker from "../../components/common/react-date-picker";
 
 const Form = styled.form`
   padding-right: 6rem;

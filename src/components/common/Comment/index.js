@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import TextArea from "./TextArea";
+import TextArea from "../TextArea";
 
 const CommentButton = styled.button`
   margin-top: 0.7rem;
