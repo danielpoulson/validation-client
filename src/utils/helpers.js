@@ -1,5 +1,5 @@
 export function setAuth(passed) {
-  const user = passed.data.signin;
+  const user = passed.signin;
   if (user.token) {
     sessionStorage.setItem("authorised", true);
     sessionStorage.setItem("token", user.token);

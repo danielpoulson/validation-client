@@ -10,7 +10,7 @@ import "./styles.css";
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($username: String!, $password: String!) {
     signin(username: $username, password: $password) {
-      id
+      _id
       token
       role
       username

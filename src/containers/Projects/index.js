@@ -25,26 +25,15 @@ const ALL_PROJECTS_QUERY = gql`
       pj_champ
       pj_target
       pj_stat
-    }
+    },
+    projectCount
   }
 `;
 
-/* actions */
-// import {
-//   getProject,
-//   getProjects,
-//   addProject,
-//   loadPage,
-//   exportProjects,
-//   setProjects
-// } from "../../actions/actions_projects";
-// import { setMain, setProjectState } from "../../actions/actions_main";
-// import { getFiles } from "../../actions/actions_files";
-// import { projectListReport } from "../../api/project.api";
+//TODO: Add in functionality for the search text
+//TODO: Add in functionality showing and hiding all records (SHOWALL)
 
 class Projects extends Component {
-  //TODO: Add in state managment for the search text
-  //TODO: Add in state managment for state (SHOWALL)
   state = {
     activePage: 0,
     colSelected: null,
@@ -168,59 +157,63 @@ class Projects extends Component {
     }
 
     return (
-      <section>
-        <div className="">
-          <SectionHeader
-            colSize="6"
-            headerSize="main"
-            title={`Project Control - ${_projectTitle}`}
-            searchText={this.state.txtSearch}
-            onSearchText={this.onSearchText}
-          />
-        </div>
-        <div className="columns">
-          <div className="column">
-            <Link to="/project/new" onClick={this.newProject}>
-              <button className="button is-primary">New Project</button>
-            </Link>
+      <Query
+        query={ALL_PROJECTS_QUERY} // fetchPolicy="network-only"
+        variables={{ skip: page * perPage - perPage }}
+      >
+        {({ data, error, loading }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error: {error.message}</p>;
+          return (
+            <section>
+              <div className="">
+                <SectionHeader
+                  colSize="6"
+                  headerSize="main"
+                  title={`Project Control - ${_projectTitle}`}
+                  searchText={this.state.txtSearch}
+                  onSearchText={this.onSearchText}
+                />
+              </div>
+              <div className="columns">
+                <div className="column">
+                  <Link to="/project/new" onClick={this.newProject}>
+                    <button className="button is-primary">New Project</button>
+                  </Link>
 
-            <button
-              className="button is-link dp-margin-10-LR"
-              onClick={this.exportProject}
-            >
-              Export List
-            </button>
+                  <button
+                    className="button is-link dp-margin-10-LR"
+                    onClick={this.exportProject}
+                  >
+                    Export List
+                  </button>
 
-            <button className="button is-info" onClick={this.allProjects}>
-              {butText}
-            </button>
-          </div>
-          <div className="column">
-            <Pagination activePage={page} numPage={perPage} search={search} />
-          </div>
-        </div>
-        <Query
-          query={ALL_PROJECTS_QUERY} // fetchPolicy="network-only"
-          variables={{ skip: page * perPage - perPage }}
-        >
-          {({ data, error, loading }) => {
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error: {error.message}</p>;
-            return (
-              console.log(page * perPage - perPage) || (
-                <div className="">
-                  <ProjectList
-                    projectlist={data.projects}
-                    colSelected={this.state.projectSortedBy}
-                    getProject={this.onGetProject}
-                    sortByClick={this.onSortByClick}
+                  <button className="button is-info" onClick={this.allProjects}>
+                    {butText}
+                  </button>
+                </div>
+                <div className="column">
+                  <Pagination
+                    activePage={page}
+                    perPage={perPage}
+                    search={search}
+                    count={data.projectCount}
+                    mode="projects"
                   />
                 </div>
-              )
-            );
-          }}
-        </Query>
-      </section>
+              </div>
+              <div className="">
+                <ProjectList
+                  projectlist={data.projects}
+                  colSelected={this.state.projectSortedBy}
+                  getProject={this.onGetProject}
+                  sortByClick={this.onSortByClick}
+                />
+              </div>
+            </section>
+          );
+        }}
+      </Query>
     );
   }
 }

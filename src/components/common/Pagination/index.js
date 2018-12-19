@@ -1,86 +1,79 @@
 import React from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
-const PAGINATION_QUERY = gql`
-  query PAGINATION_QUERY {
-    projectCount
-  }
-`;
 
 const P = styled.p`
   cursor: pointer;
   cursor: hand;
   color: #71abff;
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+
+const Pagin = styled.div`
+  padding: 5px;
+  span {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 `;
 
 type Props = {
   activePage: number,
-  numPage: number,
-  search: string
+  perPage: number,
+  search: string,
+  count: string,
+  mode: string
 };
 
-const Pagination = ({ activePage, numPage, search }: Props) => (
-  <Query query={PAGINATION_QUERY}>
-    {({ data, loading, error }) => {
-      if (loading) return <p>Loading...</p>;
-      activePage = +activePage;
-      const pagnum = Math.ceil(data.projectCount / numPage) || 1;
-      const pagDisplay = `${activePage} of ${pagnum}`;
-      return (
-        <ul>
-          <nav className="navbar">
-            <div className="navbar-menu">
-              <div className="navbar-end dpPag">
-                <div aria-disabled={activePage <= 1}>
-                  <Link
-                    to={{
-                      pathname: "/projects",
-                      search: `?page=1,search=${search}`
-                    }}
-                  >
-                    <P>First</P>
-                  </Link>
-                  <Link
-                    to={{
-                      pathname: "/projects",
-                      search: `?page=${
-                        activePage <= 1 ? 1 : activePage - 1
-                      },search=${search}`
-                    }}
-                  >
-                    <span className="fa fa-chevron-left dpHand" />
-                  </Link>
-                </div>
-                <li className="navbar-item">{pagDisplay}</li>
-                <Link
-                  to={{
-                    pathname: "/projects",
-                    search: `?page=${
-                      activePage >= pagnum ? pagnum : activePage + 1
-                    },search=${search}`
-                  }}
-                >
-                  <span className="fa fa-chevron-right dpHand" />
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/projects",
-                    search: `?page=${numPage},search=${search}`
-                  }}
-                >
-                  <P>Last</P>
-                </Link>
-                <li className="navbar-item">Records {data.projectCount}</li>
-              </div>
-            </div>
-          </nav>
-        </ul>
-      );
-    }}
-  </Query>
-);
+const Pagination = ({ activePage, perPage, search, count, mode }: Props) => {
+  activePage = +activePage;
+  const pages = Math.ceil(count / perPage) || 1;
+  const pagDisplay = `${activePage} of ${pages}`;
+  return (
+    <div className="navbar-menu">
+      <Pagin className="navbar-end dpPag">
+        <Link
+          to={{
+            pathname: `/${mode}`,
+            search: `?page=1,search=${search}`
+          }}
+        >
+          <P>First</P>
+        </Link>
+        <Link
+          to={{
+            pathname: `/${mode}`,
+            search: `?page=${
+              activePage <= 1 ? 1 : activePage - 1
+            },search=${search}`
+          }}
+        >
+          <span className="fa fa-chevron-left dpHand" />
+        </Link>
+        <span>{pagDisplay}</span>
+        <Link
+          to={{
+            pathname: `/${mode}`,
+            search: `?page=${
+              activePage >= pages ? pages : activePage + 1
+            },search=${search}`
+          }}
+        >
+          <span className="fa fa-chevron-right dpHand" />
+        </Link>
+        <Link
+          to={{
+            pathname: `/${mode}`,
+            search: `?page=${pages},search=${search}`
+          }}
+        >
+          <P>Last</P>
+        </Link>
+        <span>Records {count}</span>
+      </Pagin>
+    </div>
+  );
+};
 
 export default Pagination;

@@ -14,7 +14,7 @@ const client = new ApolloClient({
 });
 
 const Main = styled.div`
-  max-width: 1600px;
+  max-width: 1500px;
   margin: 0 auto;
   padding-top: 70px;
   padding-right: 10px;

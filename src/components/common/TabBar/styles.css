@@ -1,0 +1,26 @@
+.tab-bar--tabs .tab-bar--tab {
+  border-bottom-style: none;
+}
+
+.tab-bar--tabs .tab-bar--tab a {
+  border-bottom-style: none;
+  margin-bottom: 1px;
+}
+
+.tab-bar--tabs .tab-bar--tab a span {
+  color: #db4949;
+}
+
+.tab-bar--tabs ul .tab-is-active a,
+.tab-bar--tabs .tab-bar--tab a:hover {
+  background-color: transparent;
+  border-bottom-color: #113889;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  color: #041a3d;
+}
+
+.tab-bar--tabs ul .tab-is-active a {
+  font-weight: bold;
+  /* padding-bottom: calc(0.5rem - 3px); */
+}
