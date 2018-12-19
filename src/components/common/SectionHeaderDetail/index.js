@@ -1,0 +1,20 @@
+import React from 'react'
+import './style.css'
+
+type Props = {
+  headerSize: stirng,
+  title: string,
+}
+
+const SectionHeaderDetail = ({headerSize, title}: Props) => {
+  title = title.length > 90 ? `${title.substring(0, 80)} ...` : title
+  return (
+    <div className="mainpro__HeaderDetail-main">
+      <div className="mainpro__HeaderDetail-text">
+        <p className={`mainpro__HeaderDetail-text-${headerSize}`}>{title}</p>
+      </div>
+    </div>
+  )
+}
+
+export default SectionHeaderDetail
