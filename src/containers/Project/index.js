@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import toastr from "toastr";
 import ProjectForm from "../../components/Project/project-form";
 import { projectFormIsValid } from "./project-form.validation";
@@ -16,55 +14,6 @@ import { addObjectToArray, removeByIndex } from "../../utils/data-functions";
 
 import "./styles.css";
 
-const PROJECT_QUERY = gql`
-  query PROJECT_QUERY($pj_no: String) {
-    project(pj_no: $pj_no) {
-      _id
-      pj_no
-      pj_title
-      pj_sponsor
-      pj_link
-      pj_champ
-      pj_cust
-      pj_pry
-      pj_start
-      pj_target
-      pj_closed
-      created
-      dateclosed
-      pj_stat
-      pj_descp
-      pj_objt
-      pj_delry
-    }
-    tasks(source: $pj_no) {
-      TKName
-      TKTarg
-      TKChamp
-      TKStat
-    }
-  }
-`;
-
-/* actions */
-// import {
-//   addProject,
-//   closeProject,
-//   editProject,
-//   getProject
-// } from "../../actions/actions_projects";
-
-// import { setMain, setTitle } from "../../actions/actions_main";
-
-// import {
-//   createProject,
-//   getProjectById,
-//   saveLogMessage,
-//   saveProjectById
-// } from "../../api/project.api";
-
-// import { exportTaskList } from "../../api/task.api";
-
 class ProjectDetail extends Component {
   state = {
     activeTab: "DetailTab",
@@ -77,14 +26,14 @@ class ProjectDetail extends Component {
     FilesTab: "is-hidden",
     fCount: 0,
     isLogDirty: false,
-    project: {},
+    project: this.props.project,
     projectTitle: "Get the main title",
     pjNo: "",
     errorsObj: {},
     log: [],
     LogTab: "is-hidden",
     mainId: "new",
-    tasks: [],
+    tasks: this.props.tasks,
     TasksTab: "is-hidden",
     tCount: 0,
     status: [
@@ -95,27 +44,6 @@ class ProjectDetail extends Component {
       { value: 5, text: "Cancelled" }
     ]
   };
-
-  componentDidMount() {
-    const pjNo = this.props.match.params.id;
-    // if (this.props.main.loading === true) {
-    //   // this.props.getProjectTasks(pjNo);
-    // }
-    this.setState({ pjNo });
-
-    if (pjNo !== "new") {
-      // getProjectById(pjNo).then(proj => {
-      //   const project = proj.data.project;
-      //   this.setState({
-      //     project: project,
-      //     log: project.pj_log,
-      //     champ: project.pj_champ,
-      //     tasks: proj.data.tasks,
-      //     files: proj.data.files
-      //   });
-      // });
-    }
-  }
 
   addFile = file => {
     const files = addObjectToArray(this.state.files, file.data, "_id");
@@ -189,6 +117,7 @@ class ProjectDetail extends Component {
   };
 
   updateProjectStateDate = (field, value) => {
+    console.log(field, value);
     const _project = this.state.project;
     _project[field] = value;
     return this.setState({ project: _project });
@@ -258,7 +187,8 @@ class ProjectDetail extends Component {
     });
   };
   props: {
-    // addProject: any,
+    project: Object,
+    tasks: Array
     // project: any,
     // ctTotal: number,
     // createLog: any,
@@ -286,104 +216,85 @@ class ProjectDetail extends Component {
         : "New - Project";
 
     return (
-      <Query
-        query={PROJECT_QUERY}
-        variables={
-          { pj_no: this.props.match.params.id } // fetchPolicy="network-only"
-        }
-      >
-        {({ data, error, loading }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error: {error.message}</p>;
-          return (
-            <div>
-              <div>
-                <SectionHeader
-                  colSize="12"
-                  headerSize="sub"
-                  title={_title}
-                  hideSearch="is-hidden"
-                />
-              </div>
-              <div className="columns is-gapless">
-                <div className="column is-four-fifths">
-                  <TabBar
-                    showTabBar={this.state.pjNo}
-                    mode="project"
-                    showTab={this.showTab}
-                    taskCount={this.state.tasks.length}
-                    fileCount={this.state.files.length}
-                    activeTab={this.state.activeTab}
-                  />
-                </div>
-                <div className="column">
-                  <div className="buttons">
-                    <span
-                      className="button is-primary"
-                      onClick={this.saveProject}
-                    >
-                      Save Project
-                    </span>
-                    <span
-                      className="button is-info"
-                      onClick={this.cancelProject}
-                    >
-                      Cancel
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className={this.state.DetailTab}>
-                {this.state.errors.length > 0 ? (
-                  <ErrorPanel errors={this.state.errors} />
-                ) : (
-                  ""
-                )}
-                <ProjectForm
-                  project={data.project}
-                  errors={this.state.errorsObj}
-                  onProjectStateChange={this.updateProjectState}
-                  onDateProject={this.updateProjectStateDate}
-                  status={this.state.status}
-                  users={[
-                    { value: "Daniel Poulson", text: "Daniel Poulson" },
-                    { value: "Tim Woods", text: "Tim Woods" }
-                  ]}
-                />
-              </div>
-              <TaskList
-                onSelectTask={this.onSelectTask}
-                tasklist={data.tasks}
-                tasksTab={this.state.TasksTab}
-                title={this.state.projectTitle}
-                newTask={this.newTask}
-                exportTasks={this.exportTasks}
-              />
-              <ProjectLog
-                logTab={this.state.LogTab}
-                comCurrent={this.state.comment}
-                onAddComment={this.onAddComment}
-                onApprove={this.onApprove}
-                onCommentProject={this.onCommentProject}
-                onFinal={this.onFinal}
-                onCancel={this.onCancel}
-                log={this.state.log}
-              />
-              <div className={this.state.FilesTab}>
-                <FileList
-                  filesTab={this.state.FilesTab}
-                  sourceId={this.state.project.pj_no}
-                  files={this.state.files}
-                  addFile={this.addFile}
-                  deleteFile={this.onDeleteFile}
-                  user={"Daniel Poulson"}
-                  mode="Project"
-                />
-              </div>
+      <div>
+        <div>
+          <SectionHeader
+            colSize="12"
+            headerSize="sub"
+            title={_title}
+            hideSearch="is-hidden"
+          />
+        </div>
+        <div className="columns is-gapless">
+          <div className="column is-four-fifths">
+            <TabBar
+              showTabBar={this.state.pjNo}
+              mode="project"
+              showTab={this.showTab}
+              taskCount={this.state.tasks.length}
+              fileCount={this.state.files.length}
+              activeTab={this.state.activeTab}
+            />
+          </div>
+          <div className="column">
+            <div className="buttons">
+              <span className="button is-primary" onClick={this.saveProject}>
+                Save Project
+              </span>
+              <span className="button is-info" onClick={this.cancelProject}>
+                Cancel
+              </span>
             </div>
-          );
-        }}
-      </Query>
+          </div>
+        </div>
+        <div className={this.state.DetailTab}>
+          {this.state.errors.length > 0 ? (
+            <ErrorPanel errors={this.state.errors} />
+          ) : (
+            ""
+          )}
+          <ProjectForm
+            project={this.state.project}
+            errors={this.state.errorsObj}
+            onProjectStateChange={this.updateProjectState}
+            onDateProject={this.updateProjectStateDate}
+            status={this.state.status}
+            users={[
+              { value: "Daniel Poulson", text: "Daniel Poulson" },
+              { value: "Tim Woods", text: "Tim Woods" }
+            ]}
+          />
+        </div>
+        <TaskList
+          onSelectTask={this.onSelectTask}
+          tasklist={this.state.tasks}
+          tasksTab={this.state.TasksTab}
+          title={this.state.projectTitle}
+          newTask={this.newTask}
+          exportTasks={this.exportTasks}
+        />
+        <ProjectLog
+          logTab={this.state.LogTab}
+          comCurrent={this.state.comment}
+          onAddComment={this.onAddComment}
+          onApprove={this.onApprove}
+          onCommentProject={this.onCommentProject}
+          onFinal={this.onFinal}
+          onCancel={this.onCancel}
+          log={this.state.log}
+        />
+        <div className={this.state.FilesTab}>
+          <FileList
+            filesTab={this.state.FilesTab}
+            sourceId={this.state.project.pj_no}
+            files={this.state.files}
+            addFile={this.addFile}
+            deleteFile={this.onDeleteFile}
+            user={"Daniel Poulson"}
+            mode="Project"
+          />
+        </div>
+      </div>
     );
   }
 }

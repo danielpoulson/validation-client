@@ -23,8 +23,7 @@ const ProjectRow = ({ project, getProject }: Props) => {
       </td>
       <td> {project.pj_champ} </td>
       <td className="has-text-centered">
-        {" "}
-        {moment(+project.pj_target).format("DD/MM/YYYY")}{" "}
+        {moment(project.pj_target).format("DD/MM/YYYY")}
       </td>
       <td className="colaligncenter">
         <i className={getStatCC(project.pj_stat)} />

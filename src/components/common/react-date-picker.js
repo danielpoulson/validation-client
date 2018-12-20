@@ -1,6 +1,7 @@
 import React from "react";
-import DatePicker from "react-date-picker";
-import "./new-date-picker.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+// import "./new-date-picker.css";
 
 type Props = {
   error: boolean,
@@ -22,9 +23,6 @@ const ReactDatePicker = ({
 }: Props) => {
   const spanStyle = { color: "red" };
 
-  //   const DAY_FORMAT = 'DD/MM/YYYY';
-  //   const formattedDay = selectedDay ? moment(selectedDay).format(DAY_FORMAT) : '';
-
   return (
     <div className="field is-horizontal">
       <div className="field-label is-normal">
@@ -34,10 +32,9 @@ const ReactDatePicker = ({
         <div className="field">
           <div className="control">
             <DatePicker
-              className="dpDatePicker"
+              dateFormat="dd/MM/yyyy"
               onChange={onChange}
-              value={selectedDay}
-              locale="en-AU"
+              selected={selectedDay && new Date(selectedDay)}
             />
             {error && (
               <div style={spanStyle} className="input">

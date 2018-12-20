@@ -8,14 +8,14 @@ import Header from "./layouts/header";
 
 import Home from "./containers/Home";
 import Projects from "./containers/Projects";
-import Project from "./containers/Project";
+import Project from "./containers/Project/ProjectData";
 
 const client = new ApolloClient({
   uri: "http://localhost:5555"
 });
 
 const Main = styled.div`
-  max-width: 1500px;
+  max-width: 1300px;
   margin: 0 auto;
   padding-top: 70px;
   padding-right: 10px;
