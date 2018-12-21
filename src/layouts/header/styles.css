@@ -10,10 +10,25 @@
 }
 
 .pmr-header__container {
+  display: grid;
+  grid-template-columns: auto 30%;
+}
+
+.pmr-navbar__navbar,
+.pmr-header__container {
   max-width: 1300px;
   margin: 0 auto;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 0.75rem;
+}
+
+.pmr-navbar__container {
+  margin-top: -5px;
+  height: 65px;
+  background: #f2efef;
+}
+
+.pmr-navbar__navbar {
+  padding-top: 0px;
 }
 
 .login-div {

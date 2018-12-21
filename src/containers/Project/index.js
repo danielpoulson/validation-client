@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import toastr from "toastr";
 import ProjectForm from "../../components/Project/project-form";
 import { projectFormIsValid } from "./project-form.validation";
-// import { usersFormattedForDropdown } from "../../components/common/Selectors";
+import { usersFormattedForDropdown } from "../../components/common/Selectors";
 import TabBar from "../../components/common/TabBar";
 import TaskList from "../../components/Tasks/task-list";
 import FileList from "../../components/Files/FileList";
@@ -102,7 +102,7 @@ class ProjectDetail extends Component {
   cancelProject = e => {
     e.preventDefault();
     // this.props.history.push(`/project/${this.state.project.pj_no}`);
-    this.props.history.push("/projects");
+    this.props.history.push("/projects?page=1");
   };
 
   exportTasks = () => {
@@ -259,10 +259,7 @@ class ProjectDetail extends Component {
             onProjectStateChange={this.updateProjectState}
             onDateProject={this.updateProjectStateDate}
             status={this.state.status}
-            users={[
-              { value: "Daniel Poulson", text: "Daniel Poulson" },
-              { value: "Tim Woods", text: "Tim Woods" }
-            ]}
+            users={usersFormattedForDropdown(this.props.users)}
           />
         </div>
         <TaskList

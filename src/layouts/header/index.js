@@ -44,13 +44,13 @@ class Header extends Component {
   render() {
     return (
       <div className="top-band">
-        <section className="columns pmr-header__container">
-          <div className="column">
+        <section className="pmr-header__container">
+          <div className="pmr-logo__container">
             <h3 className="top-band-h3">Project Manager</h3>
           </div>
           <Mutation mutation={SIGNIN_MUTATION} variables={this.state}>
             {(signin, { error, loading }) => (
-              <div className="column is-3 login-div">
+              <div className="login-div">
                 {!this.state.fullname ? (
                   <Login
                     password={this.state.password}
@@ -77,8 +77,10 @@ class Header extends Component {
             )}
           </Mutation>
         </section>
-        <div className="pmr-header__container">
-          <NavBar username={this.state.username} />
+        <div className="pmr-navbar__container">
+          <div className="pmr-navbar__navbar">
+            <NavBar username={this.state.username} />
+          </div>
         </div>
       </div>
     );

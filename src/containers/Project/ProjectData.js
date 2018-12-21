@@ -32,11 +32,13 @@ const PROJECT_QUERY = gql`
       TKStat
       SourceId
     }
+    users {
+      fullname
+    }
   }
 `;
 
 const ProjectData = props => {
-  //   console.log(props.match.params.id);
   return (
     <Query
       query={PROJECT_QUERY}
@@ -47,7 +49,14 @@ const ProjectData = props => {
       {({ data, error, loading }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error: {error.message}</p>;
-        return <Project project={data.project} tasks={data.tasks} />;
+        return (
+          <Project
+            project={data.project}
+            tasks={data.tasks}
+            users={data.users}
+            {...props}
+          />
+        );
       }}
     </Query>
   );

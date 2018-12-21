@@ -6,6 +6,14 @@
 /* 5. Pagination Styles  */
 /* 6. Form Sizes  */
 
+:root {
+  --main-theme-color-4-1: #ffffff;
+  --main-theme-color-4-2: #fc0505;
+  --main-theme-color-4-3: #000c18;
+  --main-theme-color-4-4: #3d5fbb;
+  --main-theme-color-4-5: #3ad393;
+}
+
 body {
   font-size: 0.95rem;
 }

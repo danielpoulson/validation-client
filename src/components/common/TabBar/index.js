@@ -1,5 +1,5 @@
 import React from "react";
-import TabRow from "../TabRow";
+import TabRow from "./tabrow";
 import { tabData } from "../../../utils/helpers";
 import "./styles.css";
 
@@ -62,7 +62,7 @@ const TabBar = ({
   }
 
   return (
-    <div className="tabs tab-bar--tabs">
+    <div className="tabs pmr-tabbar__container">
       <ul className="dpHand tab-bar--tab">{tabList}</ul>
     </div>
   );

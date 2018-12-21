@@ -3,8 +3,13 @@
 }
 
 .navbar {
-  min-height: 30px;
+  background: #f2efef;
+  min-height: 65px;
   border-radius: 0px 0px 5px 5px;
+}
+
+.navbar .navbar-item:hover {
+  border-bottom: red solid 2px;
 }
 
 .val-navbar--icon {
